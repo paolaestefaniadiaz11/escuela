@@ -81,5 +81,12 @@ public class GlobalExceptionHandler {
                         "Error interno del servidor. Por favor, contacte al administrador."));
     }
 
+    @ExceptionHandler(EntidadRelacionadaException.class)
+    public ResponseEntity<CustomErrorResponse> handleRecursoNoEncontradoException(EntidadRelacionadaException e) {
+        log.warn("No se encontró el recurso: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new CustomErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage()));
+    }
+
 
 }
