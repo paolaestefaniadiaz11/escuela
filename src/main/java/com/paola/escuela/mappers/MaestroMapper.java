@@ -1,10 +1,11 @@
 package com.paola.escuela.mappers;
 
-import com.paola.escuela.dto.datos.DatosCursos;
-import com.paola.escuela.dto.maestros.MaestroRequest;
-import com.paola.escuela.dto.maestros.MaestroResponse;
-import com.paola.escuela.entities.Grupos;
-import com.paola.escuela.entities.Maestros;
+import com.paola.escuela.dto.datos.DatosCurso;
+import com.paola.escuela.dto.datos.DatosMaestro;
+import com.paola.escuela.dto.maestro.MaestroRequest;
+import com.paola.escuela.dto.maestro.MaestroResponse;
+import com.paola.escuela.entities.Grupo;
+import com.paola.escuela.entities.Maestro;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,16 +15,16 @@ import java.util.List;
 
 @AllArgsConstructor
 
-public class MaestroMapper implements CommonMapper<MaestroRequest, MaestroResponse, Maestros> {
+public class MaestroMapper implements CommonMapper<MaestroRequest, MaestroResponse, Maestro> {
 
     private final CursoMapper cursoMapper;
 
     @Override
 
-    public Maestros requestAEntidad(MaestroRequest request){
+    public Maestro requestAEntidad(MaestroRequest request) {
         if (request == null) return null;
 
-        return Maestros.builder()
+        return Maestro.builder()
                 .nombre(request.nombre().trim())
                 .apellidoPaterno(request.apellidoPaterno().trim())
                 .apellidoMaterno(request.apellidoMaterno().trim())
@@ -33,11 +34,11 @@ public class MaestroMapper implements CommonMapper<MaestroRequest, MaestroRespon
     }
 
     @Override
-    public MaestroResponse entidadAResponse (Maestros entidad){
+    public MaestroResponse entidadAResponse(Maestro entidad) {
 
-        if (entidad ==null) return null;
+        if (entidad == null) return null;
 
-        List<DatosCursos> cursos = entidadADatosCurso(entidad);
+        List<DatosCurso> cursos = entidadADatosCurso(entidad);
 
         return new MaestroResponse(
                 entidad.getId(),
@@ -53,13 +54,26 @@ public class MaestroMapper implements CommonMapper<MaestroRequest, MaestroRespon
     }
 
 
-    private List<DatosCursos> entidadADatosCurso(Maestros entidad){
-        if (entidad ==null) return List.of();
+    private List<DatosCurso> entidadADatosCurso(Maestro entidad) {
+        if (entidad == null) return List.of();
 
         return entidad.getGrupos().stream()
-                .map(Grupos::getCurso)
-                .map(cursoMapper::entidadADatosCursos)
+                .map(Grupo::getCurso)
+                .map(cursoMapper::entidadADatosCurso)
                 .toList();
+
+    }
+
+    public DatosMaestro entidadADatosMaestro(Maestro maestro) {
+        if (maestro == null) return null;
+
+        return new DatosMaestro(
+                maestro.getNombre(),
+                maestro.getEmail(),
+                maestro.getTelefono()
+
+        );
+
 
     }
 

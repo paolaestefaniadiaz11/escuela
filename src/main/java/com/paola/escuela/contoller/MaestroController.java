@@ -1,8 +1,8 @@
 package com.paola.escuela.contoller;
 
-import com.paola.escuela.dto.maestros.MaestroRequest;
-import com.paola.escuela.dto.maestros.MaestroResponse;
-import com.paola.escuela.services.maestros.MaestroService;
+import com.paola.escuela.dto.maestro.MaestroRequest;
+import com.paola.escuela.dto.maestro.MaestroResponse;
+import com.paola.escuela.services.maestro.MaestroService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

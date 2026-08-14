@@ -1,27 +1,23 @@
 package com.paola.escuela.mappers;
 
-import com.paola.escuela.dto.CustomErrorResponse;
-import com.paola.escuela.dto.cursos.CursosRequest;
-import com.paola.escuela.dto.cursos.CursosResponse;
-import com.paola.escuela.dto.datos.DatosCursos;
-import com.paola.escuela.dto.maestros.MaestroRequest;
-import com.paola.escuela.dto.maestros.MaestroResponse;
-import com.paola.escuela.entities.Cursos;
-import com.paola.escuela.entities.Maestros;
+import com.paola.escuela.dto.curso.CursosRequest;
+import com.paola.escuela.dto.curso.CursosResponse;
+import com.paola.escuela.dto.datos.DatosCurso;
+import com.paola.escuela.entities.Curso;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CursoMapper implements CommonMapper<CursosRequest, CursosResponse, Cursos>{
+public class CursoMapper implements CommonMapper<CursosRequest, CursosResponse, Curso>{
 
     @Override
 
-    public Cursos requestAEntidad(CursosRequest request){
+    public Curso requestAEntidad(CursosRequest request){
         if (request == null) return null;
 
         String descripcion = request.descripcion()!= null
                 ? request.descripcion().trim(): null;
 
-        return Cursos.builder()
+        return Curso.builder()
                 .nombre(request.nombre().trim())
                         .despcripcion(descripcion)
                         .creditos(request.creditos())
@@ -32,7 +28,7 @@ public class CursoMapper implements CommonMapper<CursosRequest, CursosResponse, 
 
     @Override
 
-    public CursosResponse entidadAResponse(Cursos entidad) {
+    public CursosResponse entidadAResponse(Curso entidad) {
         if (entidad == null) return null;
 
         String descripcion = entidad.getDespcripcion() == null
@@ -47,13 +43,13 @@ public class CursoMapper implements CommonMapper<CursosRequest, CursosResponse, 
 
 }
 
-public DatosCursos entidadADatosCursos(Cursos entidad) {
+public DatosCurso entidadADatosCurso(Curso entidad) {
     if (entidad == null) return null;
 
     String descripcion = entidad.getDespcripcion() == null
             ? "Sin descripcion" : entidad.getDespcripcion();
 
-    return new DatosCursos(
+    return new DatosCurso(
             entidad.getNombre(),
             descripcion,
             entidad.getCreditos()
