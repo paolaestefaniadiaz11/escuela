@@ -1,11 +1,11 @@
 package com.paola.escuela.repositories;
 
-import com.paola.escuela.entities.Maestros;
+import com.paola.escuela.entities.Maestro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MaestroReporitory extends JpaRepository <Maestros, Long> {
+public interface MaestroReporitory extends JpaRepository <Maestro, Long> {
 
     boolean existsByEmailIgnoreCase(String email);
 
@@ -15,4 +15,5 @@ public interface MaestroReporitory extends JpaRepository <Maestros, Long> {
 
     boolean existsByTelefonoAndIdNot(String telefono, Long id);
 
+    boolean existsById(Long id);
 }
